@@ -76,9 +76,16 @@ for stl in "$@"; do
 	echo -e "\n>>> Generating STL for ${stl} ...\n"
 	if /Slic3r/slic3r-dist/prusa-slicer \
 		--load "${WORKDIR}/${SLICE_CFG}" \
+		--slice \
+		--export-gcode \
+		--ensure-on-bed \
+		--repair \
+		--datadir "/config" \
 		--output-filename-format '{input_filename_base}_{layer_height}mm_{filament_type[0]}_{printer_model}.gcode_updated' \
 		--output "${TMPDIR}" \
-		"${EXTRA_SLICER_ARGS[@]}" "${WORKDIR}/${stl}"; then
+		"${EXTRA_SLICER_ARGS[@]}" \
+		"${WORKDIR}/${stl}"
+	then
 		echo -e "\n>>> Successfully generated gcode for STL\n"
 	else
 		exit_code=$?
