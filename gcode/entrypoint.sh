@@ -72,18 +72,6 @@ fi
 
 echo ">>> Center of bed coordinates will be set to: ${CENTER_OF_BED}"
 
-if [[ -z "${GITHUB_TOKEN}" ]]; then
-	echo -e "\n!!! ERROR: Unable to find your GITHUB_TOKEN !!!"
-	echo
-	echo "Some possible hints on fixing this:"
-	echo "This is a secret that is provided through GitHub Actions. The visual editor can provide more guidance and do this for you automatically"
-	echo "To do this manually, add this line to your actions"
-	echo "secret = [\"GITHUB_TOKEN\"]"
-	echo
-
-	exit 1
-fi
-
 # EXTRA_SLICER_ARGS
 # This lets a user define additional arguments to Slic3r without having to fork and modify the
 # command-line below. 
