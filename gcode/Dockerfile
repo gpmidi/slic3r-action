@@ -14,6 +14,9 @@ COPY LICENSE-slic3r /
 
 USER root
 
-RUN apt-get update && apt-get install -y jq curl
+RUN apt-get update && apt-get install -y jq curl wget
+
+RUN mkdir -p /config \
+ && wget -o /config/PrusaSlicer_config_bundle.ini "https://github.com/suchmememanyskill/PrusaSlicer-Ender3-v3-SE-Config/releases/download/v1.2.3/PrusaSlicer_config_bundle.ini"
 
 ENTRYPOINT ["/entrypoint.sh"]
