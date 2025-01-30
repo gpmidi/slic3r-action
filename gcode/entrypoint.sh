@@ -105,6 +105,7 @@ for stl in "$@"; do
 	GCODE="${GCODE#/}"
 
 	echo -e "\n>>> Processing file as ${GCODE}\n"
+	cp "${GENERATED_GCODE}" "${WORKDIR}/${DEST_GCODE_FILE}"
 
 	echo -e "\n>>> Finished processing file\n"
 
