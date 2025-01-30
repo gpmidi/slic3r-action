@@ -1,4 +1,4 @@
-FROM keyglitch/docker-slic3r-prusa3d:1.41.3
+FROM keyglitch/docker-slic3r-prusa3d:latest
 
 LABEL "name"="Slic3r gcode Action"
 LABEL "maintainer"="davidk <kdavid+slic3r+action@gmail.com>"
