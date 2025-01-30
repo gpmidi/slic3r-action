@@ -82,6 +82,10 @@ if [[ ! -z "${EXTRA_SLICER_ARGS}" ]]; then
 	IFS=' ' read -r -a EXTRA_SLICER_ARGS <<< "${EXTRA_SLICER_ARGS}"
 fi
 
+echo "\n>>> Debug\n"
+ls -alh /Slic3r
+ls -alh /Slic3r/slic3r-dist
+
 echo -e "\n>>> Processing STLs $* with ${SLICE_CFG}\n"
 
 for stl in "$@"; do
@@ -89,7 +93,7 @@ for stl in "$@"; do
 	TMPDIR="$(mktemp -d)"
 
 	echo -e "\n>>> Generating STL for ${stl} ...\n"
-	if /home/davidk/.local/bin/slic3r \
+	if /Slic3r/slic3r-dist/prusa-slicer \
 		--no-gui \
 		--load "${WORKDIR}/${SLICE_CFG}" \
 		--output-filename-format '{input_filename_base}_{layer_height}mm_{filament_type[0]}_{printer_model}.gcode_updated' \
