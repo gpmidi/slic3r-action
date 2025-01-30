@@ -57,21 +57,6 @@ if [[ ! -e "${WORKDIR}/${SLICE_CFG}" || -z "${SLICE_CFG}" ]]; then
 	exit 1
 fi
 
-# Attempt to determine the center of the bed, since the Slic3r CLI defaults to placing objects 
-# at 100,100 (which may not be appropriate for all machines)
-# Note: CENTER_OF_BED gets set to 100,100 if this fails.
-if [[ -z "${CENTER_OF_BED}" ]]; then
-	BEDSHAPE="$(grep bed_shape "${WORKDIR}/${SLICE_CFG}" | cut -d, -f3)"
-
-	echo ">>> Got bed_shape from configuration file: ${BEDSHAPE}"
-	# Example: 123x230
-	if [[ $BEDSHAPE =~ ^[0-9]+x[0-9]+ ]]; then
-		CENTER_OF_BED="$((${BEDSHAPE%x*}/2)),$((${BEDSHAPE#*x}/2))"
-	fi
-fi
-
-echo ">>> Center of bed coordinates will be set to: ${CENTER_OF_BED}"
-
 # EXTRA_SLICER_ARGS
 # This lets a user define additional arguments to Slic3r without having to fork and modify the
 # command-line below. 
@@ -93,7 +78,6 @@ for stl in "$@"; do
 		--load "${WORKDIR}/${SLICE_CFG}" \
 		--output-filename-format '{input_filename_base}_{layer_height}mm_{filament_type[0]}_{printer_model}.gcode_updated' \
 		--output "${TMPDIR}" \
-		--print-center "${CENTER_OF_BED:-100,100}" \
 		"${EXTRA_SLICER_ARGS[@]}" "${WORKDIR}/${stl}"; then
 		echo -e "\n>>> Successfully generated gcode for STL\n"
 	else
